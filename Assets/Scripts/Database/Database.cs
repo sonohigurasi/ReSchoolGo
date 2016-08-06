@@ -15,6 +15,14 @@ public struct PastQuestionRecord
     public string imageName;
 }
 
+public struct GeoLocationRecord
+{
+    public int number;
+    public string name;
+    public double latitude;
+    public double longitude;
+}
+
 public class Database {
 
 	static SqliteDatabase openDatabase()
@@ -109,6 +117,34 @@ public class Database {
 
             record.number = (int)dr["Number"];
             record.imageName = (string)dr["ImageName"];
+
+            records[count] = record;
+
+            count++;
+        }
+
+        return records;
+    }
+
+    static public GeoLocationRecord[] getAllRecordFromGeoLocationTable()
+    {
+        // Select
+        string selectQuery = "select * from GeoLocationTable";
+        DataTable dataTable = openDatabase().ExecuteQuery(selectQuery);
+
+        GeoLocationRecord[] records = new GeoLocationRecord[dataTable.Rows.Count];
+        int count = 0;
+        foreach (DataRow dr in dataTable.Rows)
+        {
+            GeoLocationRecord record;
+
+            record.number = (int)dr["Number"];
+            record.name = (string)dr["Name"];
+            //Debug.Log(dr["Latitude"].GetType().ToString());
+            record.latitude = (double)dr["Latitude"];
+            record.longitude = (double)dr["Longitude"];
+            //record.latitude = 0;
+            //record.longitude = 0;
 
             records[count] = record;
 
