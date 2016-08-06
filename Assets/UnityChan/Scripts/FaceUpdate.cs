@@ -11,7 +11,7 @@ namespace UnityChan
 		public bool isKeepFace = false;
         public bool isGUI = true;
 
-		void Start ()
+		void Awake ()
 		{
 			anim = GetComponent<Animator> ();
 		}
@@ -54,6 +54,7 @@ namespace UnityChan
 		{   
 			int ichecked = 0;
 			foreach (var animation in animations) {
+               // Debug.Log(animation.name);
 				if (str == animation.name) {
 					ChangeFace (str);
 					break;
@@ -67,7 +68,7 @@ namespace UnityChan
 			} 
 		}
 
-		void ChangeFace (string str)
+		public void ChangeFace (string str)
 		{
 			isKeepFace = true;
 			current = 1;
