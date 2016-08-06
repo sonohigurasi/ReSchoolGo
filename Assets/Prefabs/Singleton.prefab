@@ -21,7 +21,7 @@ GameObject:
   - 4: {fileID: 4000013555021900}
   - 114: {fileID: 114000011610552408}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Singleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,7 +48,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000010087265246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19c2d4986bd382f42a95340f26b99a5f, type: 3}
+  m_Script: {fileID: 11500000, guid: c5e18b0adfeb2494f89cd8b541423972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  test: 1
