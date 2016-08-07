@@ -447,7 +447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f80c13e345b9a045a23b10aafa23de8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: QuestStart
+  sceneName: MapScene
 --- !u!1 &723816384
 GameObject:
   m_ObjectHideFlags: 0
