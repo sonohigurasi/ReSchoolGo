@@ -7,6 +7,7 @@ public struct SubjectDataRecord
     public string name;
     public float date;
     public string detail;
+    public int geoLocationNumber;
 }
 
 public struct PastQuestionRecord
@@ -30,6 +31,19 @@ public class Database {
         return new SqliteDatabase("database.db");
     }
 
+    static SubjectDataRecord  parseSubjectFromRowData(DataRow row)
+    {
+        SubjectDataRecord record;
+
+        record.number = (int)row["Number"];
+        record.name = (string)row["Name"];
+        record.date = (int)row["Date"];
+        record.detail = (string)row["Detail"];
+        record.geoLocationNumber = (int)row["GeoLocationNumber"];
+
+        return record;
+    }
+
     static public SubjectDataRecord[] getAllRecordFromSubjectTable()
     {
         // Select
@@ -40,14 +54,7 @@ public class Database {
         int count = 0;
         foreach (DataRow dr in dataTable.Rows)
         {
-            SubjectDataRecord record;
-
-            record.number = (int)dr["Number"];
-            record.name = (string)dr["Name"];
-            record.date = (int)dr["Date"];
-            record.detail = (string)dr["Detail"];
-
-            records[count] = record;
+            records[count] = parseSubjectFromRowData(dr);
 
             count++;
         }
@@ -65,19 +72,22 @@ public class Database {
         int count = 0;
         foreach (DataRow dr in dataTable.Rows)
         {
-            SubjectDataRecord record;
-
-            record.number = (int)dr["Number"];
-            record.name = (string)dr["Name"];
-            record.date = (int)dr["Date"];
-            record.detail = (string)dr["Detail"];
-
-            records[count] = record;
+            records[count] = parseSubjectFromRowData(dr);
 
             count++;
         }
 
         return records;
+    }
+
+    static PastQuestionRecord parsePastQurstionFromRowData(DataRow row)
+    {
+        PastQuestionRecord record;
+
+        record.number = (int)row["Number"];
+        record.imageName = (string)row["ImageName"];
+
+        return record;
     }
 
     static public PastQuestionRecord[] getAllRecordFromQuestionTable()
@@ -90,12 +100,7 @@ public class Database {
         int count = 0;
         foreach (DataRow dr in dataTable.Rows)
         {
-            PastQuestionRecord record;
-
-            record.number = (int)dr["Number"];
-            record.imageName = (string)dr["ImageName"];
-
-            records[count] = record;
+            records[count] = parsePastQurstionFromRowData(dr);
 
             count++;
         }
@@ -113,17 +118,24 @@ public class Database {
         int count = 0;
         foreach (DataRow dr in dataTable.Rows)
         {
-            PastQuestionRecord record;
-
-            record.number = (int)dr["Number"];
-            record.imageName = (string)dr["ImageName"];
-
-            records[count] = record;
+            records[count] = parsePastQurstionFromRowData(dr);
 
             count++;
         }
 
         return records;
+    }
+
+    static GeoLocationRecord parseGeoLocationFromRowData(DataRow row)
+    {
+        GeoLocationRecord record;
+
+        record.number = (int)row["Number"];
+        record.name = (string)row["Name"];
+        record.latitude = (double)row["Latitude"];
+        record.longitude = (double)row["Longitude"];
+
+        return record;
     }
 
     static public GeoLocationRecord[] getAllRecordFromGeoLocationTable()
@@ -136,17 +148,25 @@ public class Database {
         int count = 0;
         foreach (DataRow dr in dataTable.Rows)
         {
-            GeoLocationRecord record;
+            records[count] = parseGeoLocationFromRowData(dr);
 
-            record.number = (int)dr["Number"];
-            record.name = (string)dr["Name"];
-            //Debug.Log(dr["Latitude"].GetType().ToString());
-            record.latitude = (double)dr["Latitude"];
-            record.longitude = (double)dr["Longitude"];
-            //record.latitude = 0;
-            //record.longitude = 0;
+            count++;
+        }
 
-            records[count] = record;
+        return records;
+    }
+
+    static public GeoLocationRecord[] getRecordFromGeoLocationTableByGeoLocationNumber(int number)
+    {
+        // Select
+        string selectQuery = "select * from GeoLocationTable where Number = " + number;
+        DataTable dataTable = openDatabase().ExecuteQuery(selectQuery);
+
+        GeoLocationRecord[] records = new GeoLocationRecord[dataTable.Rows.Count];
+        int count = 0;
+        foreach (DataRow dr in dataTable.Rows)
+        {
+            records[count] = parseGeoLocationFromRowData(dr);
 
             count++;
         }
