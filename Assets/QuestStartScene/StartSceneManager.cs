@@ -9,6 +9,7 @@ public class StartSceneManager : MonoBehaviour
     public int play_time = 5400;
     public float span;
 
+    public sc_ChangeScene sc_title;
     float time;
     public SubjectDataRecord subject;
     bool playnow;
@@ -36,7 +37,8 @@ public class StartSceneManager : MonoBehaviour
         // 授業開始から５秒後なのにプレイ中でないなら、クエスト受注失敗
         if(span < -5 && !playnow)
         {
-
+            // 
+            sc_title.changeScene();
         }
     }
 
