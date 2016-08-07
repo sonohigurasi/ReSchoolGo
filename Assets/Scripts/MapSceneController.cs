@@ -30,10 +30,12 @@ public class MapSceneController : MonoBehaviour {
     QuestBoard? selectedQuest; //タッチされたクエスト
     LocationCoordinate testLocate;
 
+
 #region GUIObjects
     public Text titleLabel;
     public Text descriptionLabel;
     public Text questNameLabel;
+    public Text locationLabel;
     public Button closeButton;
     public Button startButton;
 #endregion
@@ -121,6 +123,7 @@ public class MapSceneController : MonoBehaviour {
             }
         }
 
+        //現在位置を摂る
         LocationInfo currentLocationInfo = Input.location.lastData;
         LocationCoordinate currentLocationCoordinate
             = Application.platform != RuntimePlatform.WindowsPlayer && Application.platform != RuntimePlatform.WindowsEditor ?
@@ -164,8 +167,9 @@ public class MapSceneController : MonoBehaviour {
 
         if(Time.time - lastTime >= 1.0f) {
 
-            //現在位置を摂る
             var platform = Application.platform;
+
+            locationLabel.text = "緯度: " + currentLocationCoordinate.latitude + " 経度: " + currentLocationCoordinate.longitude;
 
             //掲示板を一旦消去
             /*
