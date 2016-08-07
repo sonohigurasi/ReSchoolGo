@@ -6,6 +6,7 @@ public class StartSceneManager : MonoBehaviour
 
     GameStartUIMgr uimanager;
     public float start_time = 82800;
+    public int play_time = 5400;
     public float span;
 
     float time;
@@ -50,7 +51,7 @@ public class StartSceneManager : MonoBehaviour
         if( !pauseStatus && playnow)
         {
             // そして授業時間後だった場合、ゲームクリア　それ以外は失敗
-            if(span <= -5400)
+            if(span <= -1* play_time)
             {
                 // 成功
                 UserManager.instance.isWin = true;
@@ -60,7 +61,7 @@ public class StartSceneManager : MonoBehaviour
                 //失敗
                 UserManager.instance.isWin = false;
             }
-            UserManager.instance.remmaingTime = 5400 - span;
+            UserManager.instance.remmaingTime = play_time - span;
             this.GetComponent<sc_ChangeScene>().changeScene();
         }
     }
