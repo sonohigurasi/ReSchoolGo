@@ -3164,8 +3164,8 @@ ModelImporter:
       curves: []
       events:
       - time: 0.060126472
-        functionName: OnCallChangeFace
-        data: smile@sd_generic
+        functionName: ChangeFace
+        data: smile
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
