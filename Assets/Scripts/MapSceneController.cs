@@ -167,7 +167,6 @@ public class MapSceneController : MonoBehaviour {
                 Debug.Log("Not Hit Object.");
             }
         } else {
-            selectedQuest = null;
             return null;
         }
         tmpSelectedQuest = (QuestBoard)selectedQuest.Value;
@@ -186,13 +185,14 @@ public class MapSceneController : MonoBehaviour {
     public void OnQuestStartClicked(UnityEngine.Object sender) {
         switchShowGUI(false);
         //ユーザデータ領域にクエスト情報を書き込む
-
+        UserManager.instance.selectQuestNumber = selectedQuest.Value.questPlaceInfo.questInfo.questID;
         //シーン遷移
-        SceneManager.LoadScene("QuestStart");
+        GetComponent<sc_ChangeScene>().changeScene();
     }
 
     //クエスト詳細ウインドウを閉じるボタンのイベント
     public void OnCloseQuestInfoButton(UnityEngine.Object sender) {
         switchShowGUI(false);
+        selectedQuest = null;
     }
 }
