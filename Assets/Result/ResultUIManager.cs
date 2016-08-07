@@ -15,18 +15,30 @@ public class ResultUIManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         subject = Database.getRecordFromSubjectTableBySubjectNumber(UserManager.instance.selectQuestNumber)[0];
-        setUIText(UserManager.instance.isWin, subject.name, UserManager.instance.remmaingTime, Database.getRecordFromQuestionTableByPastQuestionNumber(UserManager.instance.clearCount)[0].imageName);
+        setUIText(UserManager.instance.isWin, "解析学", UserManager.instance.remmaingTime, Database.getRecordFromQuestionTableByPastQuestionNumber(UserManager.instance.clearCount)[0].imageName);
         // 勝敗モーションが変わる
-        if (UserManager.instance.isWin)
+       // if (UserManager.instance.isWin)
         {
             face.UpdateState(2);
         }
-        else
+        //else
         {
-            face.UpdateState(3);
+        //    face.UpdateState(3);
         }
  
 
+    }
+    void Update()
+        {
+        // 勝敗モーションが変わる
+       // if (UserManager.instance.isWin)
+        {
+            face.UpdateState(2);
+        }
+        //else
+        {
+          //     face.UpdateState(3);
+        }
     }
 	
     //結果をUIテキストにセット
