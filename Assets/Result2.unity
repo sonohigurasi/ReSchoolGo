@@ -496,6 +496,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 01d6e011ff626f64cb9c319e2eb965af, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &641122406 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114000011494055344, guid: 01d6e011ff626f64cb9c319e2eb965af,
+    type: 2}
+  m_PrefabInternal: {fileID: 641122405}
+  m_Script: {fileID: 11500000, guid: e28663072b0f5f34b9736b9e84a2b0fc, type: 3}
 --- !u!1 &815140571
 GameObject:
   m_ObjectHideFlags: 0
@@ -1124,6 +1130,7 @@ MonoBehaviour:
   time_message: {fileID: 815140573}
   eval_message: {fileID: 290614102}
   item_message: {fileID: 8691290}
+  face: {fileID: 641122406}
 --- !u!1 &2134341964
 GameObject:
   m_ObjectHideFlags: 0
