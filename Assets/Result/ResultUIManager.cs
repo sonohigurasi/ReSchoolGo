@@ -9,14 +9,22 @@ public class ResultUIManager : MonoBehaviour {
     public Text time_message;
     public Text eval_message;
     public Text item_message;
-
+    public FaceStateMgr face;
     SubjectDataRecord subject;
 
 	// Use this for initialization
 	void Start () {
         subject = Database.getRecordFromSubjectTableBySubjectNumber(UserManager.instance.selectQuestNumber)[0];
-        setUIText(UserManager.instance.isWin, "解析学", 5400, "過去問1");
-
+        setUIText(UserManager.instance.isWin, subject.name, UserManager.instance.remmaingTime, Database.getRecordFromQuestionTableByPastQuestionNumber(UserManager.instance.clearCount)[0].imageName);
+        // 勝敗モーションが変わる
+        if (UserManager.instance.isWin)
+        {
+            face.UpdateState(2);
+        }
+        else
+        {
+            face.UpdateState(3);
+        }
  
 
     }
