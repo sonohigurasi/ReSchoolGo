@@ -1,14 +1,44 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class UserManager : Singleton {
+public class UserManager : MonoBehaviour {
     const string kIsQuestOrder = "OrderKey";
     const string kSelectQuestNumber = "SelectNumberKey";
     const string kClearCount = "ClearKey";
 
-    public bool isQuestOrder;
-    public int selectQuestNumber;
-    public int clearCount;
+    public static UserManager instance;
+
+    public bool isQuestOrder {
+        get { return isQuestOrder; }
+        set {
+            isQuestOrder = value;
+            PlayerPrefs.SetString(kIsQuestOrder, isQuestOrder ? "true" : "false");
+        }
+    }
+    public int selectQuestNumber {
+        get { return selectQuestNumber; }
+        set {
+            selectQuestNumber = value;
+            PlayerPrefs.SetInt(kSelectQuestNumber, selectQuestNumber);
+        }
+    }
+    public int clearCount {
+        get { return clearCount; }
+        set {
+            clearCount = value;
+            PlayerPrefs.SetInt(kClearCount, clearCount);
+        }
+    }
+
+    void Awake() {
+        if(instance != null) {
+            Destroy(this.gameObject);
+        } else if(instance == null) {
+            instance = this;
+        }
+
+        DontDestroyOnLoad(this.gameObject);
+    }
 
 	// Use this for initialization
 	void Start () {
