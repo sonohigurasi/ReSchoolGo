@@ -20,7 +20,7 @@ public class StartSceneManager : MonoBehaviour
         // データベースからデータを取得
         span = start_time - (System.DateTime.Now.Hour * 60 * 60 + System.DateTime.Now.Minute * 60 + System.DateTime.Now.Second);
         uimanager = this.GetComponent<GameStartUIMgr>();
-        uimanager.SetSubject(subject.name);
+        uimanager.SetSubject("解析学");
         uimanager.SetDescription(subject.detail);
         start_time = subject.date;
         playnow = false;
