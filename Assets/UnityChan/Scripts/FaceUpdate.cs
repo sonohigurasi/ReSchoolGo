@@ -48,7 +48,7 @@ namespace UnityChan
 			anim.SetLayerWeight (1, current);
 		}
 	 
-
+        /*
 		//アニメーションEvents側につける表情切り替え用イベントコール
 		public void OnCallChangeFace (string str)
 		{   
@@ -67,9 +67,10 @@ namespace UnityChan
 				}
 			} 
 		}
-
+        */
 		public void ChangeFace (string str)
 		{
+           
 			isKeepFace = true;
 			current = 1;
 			anim.CrossFade (str, 0);

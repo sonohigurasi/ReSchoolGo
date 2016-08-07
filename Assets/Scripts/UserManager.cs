@@ -8,24 +8,29 @@ public class UserManager : MonoBehaviour {
 
     public static UserManager instance;
 
+    private bool _isQuestOrder;
     public bool isQuestOrder {
-        get { return isQuestOrder; }
+        get { return _isQuestOrder; }
         set {
-            isQuestOrder = value;
-            PlayerPrefs.SetString(kIsQuestOrder, isQuestOrder ? "true" : "false");
+            _isQuestOrder = value;
+            PlayerPrefs.SetString(kIsQuestOrder, _isQuestOrder ? "true" : "false");
         }
     }
+
+    private int _selectQuestNumber;
     public int selectQuestNumber {
-        get { return selectQuestNumber; }
+        get { return _selectQuestNumber; }
         set {
-            selectQuestNumber = value;
+            _selectQuestNumber = value;
             PlayerPrefs.SetInt(kSelectQuestNumber, selectQuestNumber);
         }
     }
+
+    private int _clearCount;
     public int clearCount {
-        get { return clearCount; }
+        get { return _clearCount; }
         set {
-            clearCount = value;
+            _clearCount = value;
             PlayerPrefs.SetInt(kClearCount, clearCount);
         }
     }
