@@ -4,9 +4,11 @@ using System.Collections;
 public class FaceStateMgr : MonoBehaviour {
 
     public UnityChan.FaceUpdate update;
+    Animator anim;
 	// Use this for initialization
 	void Start () {
-       // update.ChangeFace("smile@sd_generic");
+        // update.ChangeFace("smile@sd_generic");
+        anim = this.GetComponent<Animator>();
 	}
     void Awake()
     {
@@ -17,5 +19,10 @@ public class FaceStateMgr : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    public void UpdateState(int num)
+    {
+        anim.SetInteger("num", num);
+    }
 
 }
