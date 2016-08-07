@@ -71,9 +71,10 @@ struct LocationCoordinate {
 
 struct QuestInfo {
     public int questID;
+    public int questType; //居るだけで経験値になるポイントでは1、チェックイン式は0
     public string questName;
     public string questDescription;
-    public DateTime startTime, endTime; //クエストの出現開始時刻と終了時刻
+    public int startTime, endTime; //クエストの出現開始時刻と終了時刻(sec)
 }
 
 struct QuestPlaceInfo {

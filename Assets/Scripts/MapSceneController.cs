@@ -75,6 +75,7 @@ public class MapSceneController : MonoBehaviour {
         QuestInfo tmpQuestInfo;
         QuestBoard tmpQuestBoard;
         foreach(SubjectDataRecord item in allQuests) {
+            //各受注ポイントを作成
             tmpQuestInfo = new QuestInfo();
             tmpQuestInfo.questID = item.number;
             tmpQuestInfo.questName = item.name;
@@ -84,9 +85,11 @@ public class MapSceneController : MonoBehaviour {
             LocationCoordinate tmpLocate;
             if(boardLocation.Length > 0) {
                 tmpLocate = new LocationCoordinate((float)(boardLocation[0].longitude), (float)(boardLocation[0].latitude));
+                tmpQuestInfo.questType = (int)boardLocation[0].type;
             } else {
                 //適当なデータを
                 tmpLocate = new LocationCoordinate(0.0f, 0.0f);
+                tmpQuestInfo.questType = 0;
             }
             tmpQuestBoard = new QuestBoard(new QuestPlaceInfo(tmpLocate, tmpQuestInfo), UnityEngine.Object.Instantiate(questBoardPrefab));
             questBoards.Add(tmpQuestBoard);
