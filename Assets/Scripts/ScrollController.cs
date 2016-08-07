@@ -9,7 +9,7 @@ public class ScrollController : MonoBehaviour {
 
     void Start()
     {
-        SubjectDataRecord[] test = Database.getAllRecordFromSubjectTable();
+        PastQuestionRecord[] test = Database.getAllRecordFromQuestionTable();
 
         for (int i = 0; i < test.Length; i++)
         {
@@ -17,7 +17,7 @@ public class ScrollController : MonoBehaviour {
             item.SetParent(transform, false);
 
             var text = item.GetComponentInChildren<Text>();
-            text.text = "date:" + test[i].date;
+            text.text = "imageName:" + test[i].imageName;
         }
     }
 
