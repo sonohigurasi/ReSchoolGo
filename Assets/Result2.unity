@@ -169,7 +169,7 @@ GameObject:
   - 198: {fileID: 150620030}
   - 199: {fileID: 150620029}
   m_Layer: 0
-  m_Name: Particle System
+  m_Name: StarParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
