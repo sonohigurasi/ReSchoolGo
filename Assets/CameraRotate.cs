@@ -10,12 +10,8 @@ public class CameraRotate : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Quaternion gattitude = Input.gyro.attitude;
-        gattitude.x *= -1;
-        gattitude.y *= -1;
-        var rot =
-            Quaternion.Euler(90, 0, 0) * gattitude;
-        this.transform.Rotate(0, (rot.y * 1), 0);
+        var tmpAngle = Input.gyro.attitude.eulerAngles;
+        this.transform.LookAt(new Vector3(0, tmpAngle.y, 0)); 
 	}
 
     void OnDestroy() {
