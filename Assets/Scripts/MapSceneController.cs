@@ -230,8 +230,11 @@ public class MapSceneController : MonoBehaviour {
         switchShowGUI(false);
         //ユーザデータ領域にクエスト情報を書き込む
         UserManager.instance.selectQuestNumber = selectedQuest.Value.questPlaceInfo.questInfo.questID;
+        //GPS停止
+        Input.location.Stop();
         //シーン遷移
         GetComponent<sc_ChangeScene>().changeScene();
+        Destroy(this);
     }
 
     //クエスト詳細ウインドウを閉じるボタンのイベント
