@@ -67,7 +67,9 @@ public class MapSceneController : MonoBehaviour {
         questBoards.Add(tmpBoard);
         */
 
-        testLocate = new LocationCoordinate(123.0f, 123.0f);
+        var testGeo = Database.getRecordFromGeoLocationTableByGeoLocationNumber(1);
+        testLocate = new LocationCoordinate((float)(testGeo[0].longitude), (float)(testGeo[0].latitude));
+
         //科目リスト一覧を得る
         var allQuests = Database.getAllRecordFromSubjectTable();
         QuestInfo tmpQuestInfo;
