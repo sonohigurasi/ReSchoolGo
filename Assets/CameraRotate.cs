@@ -11,7 +11,7 @@ public class CameraRotate : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         var tmpAngle = Input.gyro.attitude.eulerAngles;
-        this.transform.LookAt(new Vector3(0, tmpAngle.y, 0)); 
+        this.transform.Rotate(new Vector3(0, tmpAngle.y, 0)); 
 	}
 
     void OnDestroy() {
