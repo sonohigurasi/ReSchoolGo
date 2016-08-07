@@ -95,7 +95,7 @@ public class MapSceneController : MonoBehaviour {
         switchShowGUI(false);
 
         //save start time
-        lastTime = Time.time;
+        lastTime = -1.0f;
 	}
 	
 	// Update is called once per frame
