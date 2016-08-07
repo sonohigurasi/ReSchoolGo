@@ -45,6 +45,7 @@ public class MapSceneController : MonoBehaviour {
         questBoards = new ArrayList();
 
         // TODO: TestData
+        /*
         QuestInfo testQuestInfo = new QuestInfo();
         testQuestInfo.questID = 0;
         testQuestInfo.questName = "てすと";
@@ -64,14 +65,37 @@ public class MapSceneController : MonoBehaviour {
 
         tmpBoard = new QuestBoard(new QuestPlaceInfo(testLocation, testQuestInfo), UnityEngine.Object.Instantiate(questBoardPrefab));
         questBoards.Add(tmpBoard);
+        */
 
-        testLocate = new LocationCoordinate(123.0f, 123.0f);
+        var testGeo = Database.getRecordFromGeoLocationTableByGeoLocationNumber(1);
+        testLocate = new LocationCoordinate((float)(testGeo[0].longitude), (float)(testGeo[0].latitude));
+
+        //科目リスト一覧を得る
+        var allQuests = Database.getAllRecordFromSubjectTable();
+        QuestInfo tmpQuestInfo;
+        QuestBoard tmpQuestBoard;
+        foreach(SubjectDataRecord item in allQuests) {
+            tmpQuestInfo = new QuestInfo();
+            tmpQuestInfo.questID = item.number;
+            tmpQuestInfo.questName = item.name;
+            tmpQuestInfo.questDescription = item.detail;
+            var boardLocation = Database.getRecordFromGeoLocationTableByGeoLocationNumber(item.geoLocationNumber);
+            LocationCoordinate tmpLocate;
+            if(boardLocation.Length > 0) {
+                tmpLocate = new LocationCoordinate((float)(boardLocation[0].longitude), (float)(boardLocation[0].latitude));
+            } else {
+                //適当なデータを
+                tmpLocate = new LocationCoordinate(0.0f, 0.0f);
+            }
+            tmpQuestBoard = new QuestBoard(new QuestPlaceInfo(tmpLocate, tmpQuestInfo), UnityEngine.Object.Instantiate(questBoardPrefab));
+            questBoards.Add(tmpQuestBoard);
+        }
 
         //Hide GUI
         switchShowGUI(false);
 
         //save start time
-        lastTime = Time.time;
+        lastTime = -1.0f;
 	}
 	
 	// Update is called once per frame
