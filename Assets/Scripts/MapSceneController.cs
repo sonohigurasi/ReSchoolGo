@@ -175,16 +175,30 @@ public class MapSceneController : MonoBehaviour {
             foreach(QuestBoard board in questBoards) {
                 QuestPlaceInfo item = board.questPlaceInfo;
                 var distance = 1.0 * LocationCoordinate.CalculateDistance(currentLocationCoordinate, item.location) / 1000.0;//LocationCoordinate.DistanceLocations(currentLocationCoordinate, item.location);
-                GameObject tmpObject = board.questBoard;
-                if(distance <= 2.0) { //TODO: Debugging
-                    //動的に看板を配置
-                    var angle = LocationCoordinate.AngleLocations(currentLocationCoordinate, item.location);
-                    Vector3 boardPosition = new Vector3((float)(distance * Math.Cos(angle)), 0.0f, (float)(distance * Math.Sin(angle)));
-                    tmpObject.transform.position = boardPosition;
-                    tmpObject.SetActive(true);
-//                    questBoards.Add(tmpObject);
-                } else {
-                    tmpObject.SetActive(false);
+                switch(item.questInfo.questType) {
+                case 0:
+                    GameObject tmpObject = board.questBoard;
+                    if(distance <= 2.0) { //TODO: Debugging
+                        //動的に看板を配置
+                        var angle = LocationCoordinate.AngleLocations(currentLocationCoordinate, item.location);
+                        Vector3 boardPosition = new Vector3((float)(distance * Math.Cos(angle)), 0.0f, (float)(distance * Math.Sin(angle)));
+                        tmpObject.transform.position = boardPosition;
+
+                        int nowSeconds = DateTime.Now.Hour * 3600 + DateTime.Now.Minute * 60 + DateTime.Now.Second;
+                        if(item.questInfo.startTime > nowSeconds) {
+                            tmpObject.SetActive(false);
+                        }
+                        tmpObject.SetActive(true);
+                        //                    questBoards.Add(tmpObject);
+                    } else {
+                        tmpObject.SetActive(false);
+                    }
+                    break;
+                case 1: //居るだけでボーナスもらえるポイント
+                    if(distance <= 0.5) {
+                        //500m以内なら何かしらボーナス
+                    }
+                    break;
                 }
             }
 
