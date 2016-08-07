@@ -1973,7 +1973,7 @@ Prefab:
     - target: {fileID: 114000011494055344, guid: 01d6e011ff626f64cb9c319e2eb965af,
         type: 2}
       propertyPath: start_num
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114000011494055344, guid: 01d6e011ff626f64cb9c319e2eb965af,
         type: 2}
@@ -2063,6 +2063,7 @@ MonoBehaviour:
   start_time: 82800
   play_time: 5400
   span: 0
+  sc_title: {fileID: 0}
 --- !u!114 &1769597891
 MonoBehaviour:
   m_ObjectHideFlags: 0
