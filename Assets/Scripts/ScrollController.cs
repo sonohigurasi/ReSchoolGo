@@ -17,7 +17,7 @@ public class ScrollController : MonoBehaviour {
             item.SetParent(transform, false);
 
             var text = item.GetComponentInChildren<Text>();
-            text.text = "imageName:" + test[i].imageName;
+            text.text = test[i].imageName;
         }
     }
 
