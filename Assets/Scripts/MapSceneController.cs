@@ -45,6 +45,7 @@ public class MapSceneController : MonoBehaviour {
         questBoards = new ArrayList();
 
         // TODO: TestData
+        /*
         QuestInfo testQuestInfo = new QuestInfo();
         testQuestInfo.questID = 0;
         testQuestInfo.questName = "てすと";
@@ -64,6 +65,7 @@ public class MapSceneController : MonoBehaviour {
 
         tmpBoard = new QuestBoard(new QuestPlaceInfo(testLocation, testQuestInfo), UnityEngine.Object.Instantiate(questBoardPrefab));
         questBoards.Add(tmpBoard);
+        */
 
         testLocate = new LocationCoordinate(123.0f, 123.0f);
         //科目リスト一覧を得る
