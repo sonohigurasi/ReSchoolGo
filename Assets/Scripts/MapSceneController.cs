@@ -79,6 +79,7 @@ public class MapSceneController : MonoBehaviour {
             tmpQuestInfo.questID = item.number;
             tmpQuestInfo.questName = item.name;
             tmpQuestInfo.questDescription = item.detail;
+            tmpQuestInfo.startTime = (int)item.date;
             var boardLocation = Database.getRecordFromGeoLocationTableByGeoLocationNumber(item.geoLocationNumber);
             LocationCoordinate tmpLocate;
             if(boardLocation.Length > 0) {
@@ -117,6 +118,12 @@ public class MapSceneController : MonoBehaviour {
             }
         }
 
+        LocationInfo currentLocationInfo = Input.location.lastData;
+        LocationCoordinate currentLocationCoordinate
+            = Application.platform != RuntimePlatform.WindowsPlayer && Application.platform != RuntimePlatform.WindowsEditor ?
+            new LocationCoordinate(currentLocationInfo.longitude, currentLocationInfo.latitude) :
+            testLocate;
+
         //Hit Ray Check
         if(Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor) {
             if(Input.GetMouseButtonDown(0)) {
@@ -126,23 +133,36 @@ public class MapSceneController : MonoBehaviour {
                     questNameLabel.text = selectedQuest.Value.questPlaceInfo.questInfo.questName;
                     descriptionLabel.text = selectedQuest.Value.questPlaceInfo.questInfo.questDescription;
                     switchShowGUI(true);
+                    var distance = 1.0 * LocationCoordinate.CalculateDistance(currentLocationCoordinate, selectedQuest.Value.questPlaceInfo.location) / 1000.0;//LocationCoordinate.DistanceLocations(currentLocationCoordinate, item.location);
+                    if(distance <= 0.1) {
+                        startButton.enabled = true;
+                    } else {
+                        startButton.enabled = false;
+                    }
                 }
             }
         } else if(Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer) {
             if(Input.touchCount > 0) {
                 GetTouchQuestBoard(Input.touches[0].position);
+                if(selectedQuest != null) {
+                    //クエスト確認ウインドウを出す
+                    questNameLabel.text = selectedQuest.Value.questPlaceInfo.questInfo.questName;
+                    descriptionLabel.text = selectedQuest.Value.questPlaceInfo.questInfo.questDescription;
+                    switchShowGUI(true);
+                    var distance = 1.0 * LocationCoordinate.CalculateDistance(currentLocationCoordinate, selectedQuest.Value.questPlaceInfo.location) / 1000.0;//LocationCoordinate.DistanceLocations(currentLocationCoordinate, item.location);
+                    if(distance <= 0.1) {
+                        startButton.enabled = true;
+                    } else {
+                        startButton.enabled = false;
+                    }
+                }
             }
         }
 
         if(Time.time - lastTime >= 1.0f) {
 
             //現在位置を摂る
-            LocationInfo currentLocationInfo = Input.location.lastData;
             var platform = Application.platform;
-            LocationCoordinate currentLocationCoordinate
-                = Application.platform != RuntimePlatform.WindowsPlayer && Application.platform != RuntimePlatform.WindowsEditor ?
-                new LocationCoordinate(currentLocationInfo.longitude, currentLocationInfo.latitude) :
-                testLocate;
 
             //掲示板を一旦消去
             /*
