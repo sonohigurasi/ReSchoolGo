@@ -16,12 +16,19 @@ public struct PastQuestionRecord
     public string imageName;
 }
 
+public enum LocationType
+{
+    normal = 0,
+    support
+}
+
 public struct GeoLocationRecord
 {
     public int number;
     public string name;
     public double latitude;
     public double longitude;
+    public LocationType type;
 }
 
 public class Database {
@@ -170,6 +177,7 @@ public class Database {
         record.name = (string)row["Name"];
         record.latitude = (double)row["Latitude"];
         record.longitude = (double)row["Longitude"];
+        record.type = (LocationType)row["Type"];
 
         return record;
     }
