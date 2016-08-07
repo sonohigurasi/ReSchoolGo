@@ -10,11 +10,13 @@ public class ResultUIManager : MonoBehaviour {
     public Text eval_message;
     public Text item_message;
 
-
+    SubjectDataRecord subject;
 
 	// Use this for initialization
 	void Start () {
-        setUIText(false, "解析学", 5400, "過去問1");
+        subject = Database.getRecordFromSubjectTableBySubjectNumber(UserManager.instance.selectQuestNumber)[0];
+        setUIText(UserManager.instance.isWin, "解析学", 5400, "過去問1");
+
  
 
     }

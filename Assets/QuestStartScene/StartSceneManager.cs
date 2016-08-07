@@ -22,6 +22,7 @@ public class StartSceneManager : MonoBehaviour
         uimanager.SetDescription(subject.detail);
         start_time = subject.date;
         playnow = false;
+        subject = Database.getRecordFromSubjectTableBySubjectNumber(UserManager.instance.selectQuestNumber)[0];
 
 
     }
@@ -52,12 +53,15 @@ public class StartSceneManager : MonoBehaviour
             if(span <= -5400)
             {
                 // 成功
+                UserManager.instance.isWin = true;
             }
             else
             {
                 //失敗
-
+                UserManager.instance.isWin = false;
             }
+            UserManager.instance.remmaingTime = 5400 - span;
+            this.GetComponent<sc_ChangeScene>().changeScene();
         }
     }
 }
