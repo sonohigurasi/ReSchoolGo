@@ -79,6 +79,7 @@ public class MapSceneController : MonoBehaviour {
             tmpQuestInfo.questID = item.number;
             tmpQuestInfo.questName = item.name;
             tmpQuestInfo.questDescription = item.detail;
+            tmpQuestInfo.startTime = (int)item.date;
             var boardLocation = Database.getRecordFromGeoLocationTableByGeoLocationNumber(item.geoLocationNumber);
             LocationCoordinate tmpLocate;
             if(boardLocation.Length > 0) {
@@ -117,6 +118,12 @@ public class MapSceneController : MonoBehaviour {
             }
         }
 
+        LocationInfo currentLocationInfo = Input.location.lastData;
+        LocationCoordinate currentLocationCoordinate
+            = Application.platform != RuntimePlatform.WindowsPlayer && Application.platform != RuntimePlatform.WindowsEditor ?
+            new LocationCoordinate(currentLocationInfo.longitude, currentLocationInfo.latitude) :
+            testLocate;
+
         //Hit Ray Check
         if(Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor) {
             if(Input.GetMouseButtonDown(0)) {
@@ -126,23 +133,36 @@ public class MapSceneController : MonoBehaviour {
                     questNameLabel.text = selectedQuest.Value.questPlaceInfo.questInfo.questName;
                     descriptionLabel.text = selectedQuest.Value.questPlaceInfo.questInfo.questDescription;
                     switchShowGUI(true);
+                    var distance = 1.0 * LocationCoordinate.CalculateDistance(currentLocationCoordinate, selectedQuest.Value.questPlaceInfo.location) / 1000.0;//LocationCoordinate.DistanceLocations(currentLocationCoordinate, item.location);
+                    if(distance <= 0.1) {
+                        startButton.enabled = true;
+                    } else {
+                        startButton.enabled = false;
+                    }
                 }
             }
         } else if(Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer) {
             if(Input.touchCount > 0) {
                 GetTouchQuestBoard(Input.touches[0].position);
+                if(selectedQuest != null) {
+                    //クエスト確認ウインドウを出す
+                    questNameLabel.text = selectedQuest.Value.questPlaceInfo.questInfo.questName;
+                    descriptionLabel.text = selectedQuest.Value.questPlaceInfo.questInfo.questDescription;
+                    switchShowGUI(true);
+                    var distance = 1.0 * LocationCoordinate.CalculateDistance(currentLocationCoordinate, selectedQuest.Value.questPlaceInfo.location) / 1000.0;//LocationCoordinate.DistanceLocations(currentLocationCoordinate, item.location);
+                    if(distance <= 0.1) {
+                        startButton.enabled = true;
+                    } else {
+                        startButton.enabled = false;
+                    }
+                }
             }
         }
 
         if(Time.time - lastTime >= 1.0f) {
 
             //現在位置を摂る
-            LocationInfo currentLocationInfo = Input.location.lastData;
             var platform = Application.platform;
-            LocationCoordinate currentLocationCoordinate
-                = Application.platform != RuntimePlatform.WindowsPlayer && Application.platform != RuntimePlatform.WindowsEditor ?
-                new LocationCoordinate(currentLocationInfo.longitude, currentLocationInfo.latitude) :
-                testLocate;
 
             //掲示板を一旦消去
             /*
@@ -155,16 +175,30 @@ public class MapSceneController : MonoBehaviour {
             foreach(QuestBoard board in questBoards) {
                 QuestPlaceInfo item = board.questPlaceInfo;
                 var distance = 1.0 * LocationCoordinate.CalculateDistance(currentLocationCoordinate, item.location) / 1000.0;//LocationCoordinate.DistanceLocations(currentLocationCoordinate, item.location);
-                GameObject tmpObject = board.questBoard;
-                if(distance <= 2.0) { //TODO: Debugging
-                    //動的に看板を配置
-                    var angle = LocationCoordinate.AngleLocations(currentLocationCoordinate, item.location);
-                    Vector3 boardPosition = new Vector3((float)(distance * Math.Cos(angle)), 0.0f, (float)(distance * Math.Sin(angle)));
-                    tmpObject.transform.position = boardPosition;
-                    tmpObject.SetActive(true);
-//                    questBoards.Add(tmpObject);
-                } else {
-                    tmpObject.SetActive(false);
+                switch(item.questInfo.questType) {
+                case 0:
+                    GameObject tmpObject = board.questBoard;
+                    if(distance <= 2.0) { //TODO: Debugging
+                        //動的に看板を配置
+                        var angle = LocationCoordinate.AngleLocations(currentLocationCoordinate, item.location);
+                        Vector3 boardPosition = new Vector3((float)(distance * Math.Cos(angle)), 0.0f, (float)(distance * Math.Sin(angle)));
+                        tmpObject.transform.position = boardPosition;
+
+                        int nowSeconds = DateTime.Now.Hour * 3600 + DateTime.Now.Minute * 60 + DateTime.Now.Second;
+                        if(item.questInfo.startTime > nowSeconds) {
+                            tmpObject.SetActive(false);
+                        }
+                        tmpObject.SetActive(true);
+                        //                    questBoards.Add(tmpObject);
+                    } else {
+                        tmpObject.SetActive(false);
+                    }
+                    break;
+                case 1: //居るだけでボーナスもらえるポイント
+                    if(distance <= 0.5) {
+                        //500m以内なら何かしらボーナス
+                    }
+                    break;
                 }
             }
 
@@ -210,8 +244,11 @@ public class MapSceneController : MonoBehaviour {
         switchShowGUI(false);
         //ユーザデータ領域にクエスト情報を書き込む
         UserManager.instance.selectQuestNumber = selectedQuest.Value.questPlaceInfo.questInfo.questID;
+        //GPS停止
+        Input.location.Stop();
         //シーン遷移
         GetComponent<sc_ChangeScene>().changeScene();
+        Destroy(this);
     }
 
     //クエスト詳細ウインドウを閉じるボタンのイベント
