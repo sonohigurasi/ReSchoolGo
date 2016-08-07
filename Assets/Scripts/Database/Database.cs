@@ -126,6 +126,24 @@ public class Database {
         return records;
     }
 
+    static public PastQuestionRecord[] getRecordFromQuestionTableLessThenNumber(int number)
+    {
+        // Select
+        string selectQuery = "select * from PastQuestionTable where Number <= " + number;
+        DataTable dataTable = openDatabase().ExecuteQuery(selectQuery);
+
+        PastQuestionRecord[] records = new PastQuestionRecord[dataTable.Rows.Count];
+        int count = 0;
+        foreach (DataRow dr in dataTable.Rows)
+        {
+            records[count] = parsePastQurstionFromRowData(dr);
+
+            count++;
+        }
+
+        return records;
+    }
+
     static GeoLocationRecord parseGeoLocationFromRowData(DataRow row)
     {
         GeoLocationRecord record;
