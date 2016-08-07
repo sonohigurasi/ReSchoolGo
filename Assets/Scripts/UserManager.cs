@@ -15,12 +15,26 @@ public class UserManager : MonoBehaviour {
             PlayerPrefs.SetString(kIsQuestOrder, isQuestOrder ? "true" : "false");
         }
     }
+    public bool isWin
+    {
+        get { return isWin; }
+        set
+        {
+            if(value)clearCount = clearCount + 1;
+            isWin = value;
+        }
+    }
     public int selectQuestNumber {
         get { return selectQuestNumber; }
         set {
             selectQuestNumber = value;
             PlayerPrefs.SetInt(kSelectQuestNumber, selectQuestNumber);
         }
+    }
+    public float remmaingTime
+    {
+        get { return remmaingTime; }
+        set { remmaingTime = value; }
     }
     public int clearCount {
         get { return clearCount; }
