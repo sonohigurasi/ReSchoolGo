@@ -24,6 +24,7 @@ public class ResultUIManager : MonoBehaviour {
         //else
         {
         //    face.UpdateState(3);
+//            GameObject.Find("StarParticle").SetActive(false);
         }
  
 
